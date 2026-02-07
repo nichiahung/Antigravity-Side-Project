@@ -1,0 +1,19 @@
+# Render 部署設定
+# 在 Render Dashboard 建立 Web Service 時會自動偵測此檔案
+
+services:
+  - type: web
+    name: pixel-quest-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run seed
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: PASS_THRESHOLD
+        value: 7
+      - key: CORS_ORIGIN
+        value: https://nichiahung.github.io
+      - key: NODE_ENV
+        value: production

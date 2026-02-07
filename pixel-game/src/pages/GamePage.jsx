@@ -15,18 +15,17 @@ export default function GamePage({
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState([]);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [correctAnswer, setCorrectAnswer] = useState(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
 
-    // 若沒有題目資料，導回首頁
     useEffect(() => {
         if (!questions || questions.length === 0) {
             navigate('/');
         }
     }, [questions, navigate]);
 
-    // 隨機產生每關的關主頭像
     const avatars = useMemo(
         () => (questions ? getRandomAvatars(questions.length) : []),
         [questions]
@@ -50,14 +49,14 @@ export default function GamePage({
 
             setIsTransitioning(true);
 
+            // 延遲較長讓玩家看到回饋
             setTimeout(async () => {
                 if (currentIndex < totalQuestions - 1) {
-                    // 下一題
                     setCurrentIndex((prev) => prev + 1);
                     setSelectedOption(null);
+                    setCorrectAnswer(null);
                     setIsTransitioning(false);
                 } else {
-                    // 最後一題，提交答案
                     setSubmitting(true);
                     try {
                         const result = await submitAnswers(playerId, newAnswers);
@@ -68,7 +67,7 @@ export default function GamePage({
                         setIsTransitioning(false);
                     }
                 }
-            }, 800);
+            }, 1200);
         },
         [
             selectedOption,
@@ -101,6 +100,8 @@ export default function GamePage({
     }
 
     const options = ['A', 'B', 'C', 'D'];
+    // 找到正確答案（從 demo 模式的 _answer 或後端回傳）
+    const correctKey = currentQuestion._answer || null;
 
     return (
         <div className="page">
@@ -135,9 +136,23 @@ export default function GamePage({
                 <div className="options-list">
                     {options.map((opt) => {
                         let className = 'pixel-btn pixel-btn-option';
-                        if (selectedOption === opt) {
-                            className += ' selected';
+
+                        if (selectedOption) {
+                            if (opt === selectedOption) {
+                                // 玩家選的選項
+                                if (correctKey) {
+                                    // Demo 模式有正確答案
+                                    className += opt === correctKey ? ' correct' : ' wrong';
+                                } else {
+                                    className += ' selected';
+                                }
+                            }
+                            // 顯示正確答案
+                            if (correctKey && opt === correctKey && opt !== selectedOption) {
+                                className += ' correct';
+                            }
                         }
+
                         return (
                             <button
                                 key={opt}
@@ -160,6 +175,13 @@ export default function GamePage({
                         );
                     })}
                 </div>
+
+                {/* 答題回饋文字 */}
+                {selectedOption && correctKey && (
+                    <div className={`answer-feedback ${selectedOption === correctKey ? 'correct' : 'wrong'}`}>
+                        {selectedOption === correctKey ? '✓ CORRECT!' : `✗ WRONG — 正確答案：${correctKey}`}
+                    </div>
+                )}
 
                 {error && <div className="error-message">{error}</div>}
             </div>

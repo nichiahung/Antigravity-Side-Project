@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 import ResultPage from './pages/ResultPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 import './index.css';
 
 function AppRoutes() {
@@ -76,6 +77,10 @@ function AppRoutes() {
             onRestart={handleRestart}
           />
         }
+      />
+      <Route
+        path="/leaderboard"
+        element={<LeaderboardPage />}
       />
     </Routes>
   );

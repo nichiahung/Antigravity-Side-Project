@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const PASS_THRESHOLD = Number(import.meta.env.VITE_PASS_THRESHOLD) || 7;
 const QUESTION_COUNT = Number(import.meta.env.VITE_QUESTION_COUNT) || 10;
@@ -15,7 +15,7 @@ export default function ResultPage({ result, playerId, onRestart }) {
 
     if (!result) return null;
 
-    const { score, total, passed, highScore, attempts } = result;
+    const { score, total, passed, highScore, attempts, corrections } = result;
 
     return (
         <div className="page">
@@ -62,6 +62,45 @@ export default function ResultPage({ result, playerId, onRestart }) {
                     </div>
                 </div>
 
+                {/* 每題結果 */}
+                {corrections && corrections.length > 0 && (
+                    <>
+                        <div className="pixel-divider" />
+                        <div style={{ textAlign: 'left', width: '100%' }}>
+                            <div style={{
+                                fontFamily: 'var(--font-heading)',
+                                fontSize: '0.5rem',
+                                color: 'var(--color-text-muted)',
+                                marginBottom: 'var(--space-md)',
+                                textAlign: 'center',
+                            }}>
+                                ANSWER REVIEW
+                            </div>
+                            {corrections.map((c, i) => (
+                                <div
+                                    key={c.questionId}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: 'var(--space-sm) var(--space-md)',
+                                        fontFamily: 'var(--font-body)',
+                                        fontSize: '1.25rem',
+                                        borderBottom: '1px solid rgba(124, 58, 237, 0.15)',
+                                    }}
+                                >
+                                    <span style={{ color: 'var(--color-text-muted)' }}>Q{i + 1}</span>
+                                    <span style={{
+                                        color: c.isCorrect ? 'var(--color-success)' : 'var(--color-danger)',
+                                    }}>
+                                        {c.isCorrect ? '✓' : `✗ ${c.selected} → ${c.correct}`}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+
                 {/* 按鈕 */}
                 <div className="btn-group">
                     <button
@@ -77,6 +116,9 @@ export default function ResultPage({ result, playerId, onRestart }) {
                         ◀ HOME
                     </button>
                 </div>
+                <p style={{ textAlign: 'center', marginTop: 'var(--space-lg)' }}>
+                    <Link to="/leaderboard" className="nav-link">🏆 LEADERBOARD</Link>
+                </p>
             </div>
         </div>
     );

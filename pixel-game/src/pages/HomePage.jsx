@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { fetchQuestions } from '../api';
 import { preloadAvatars } from '../avatars';
+import { Link } from 'react-router-dom';
 
 const QUESTION_COUNT = Number(import.meta.env.VITE_QUESTION_COUNT) || 10;
 
@@ -97,6 +98,9 @@ export default function HomePage({ onGameStart }) {
                     }}
                 >
                     共 {QUESTION_COUNT} 題 ─ 準備好了嗎？
+                </p>
+                <p style={{ textAlign: 'center', marginTop: 'var(--space-md)' }}>
+                    <Link to="/leaderboard" className="nav-link">🏆 LEADERBOARD</Link>
                 </p>
             </div>
         </div>

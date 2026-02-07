@@ -1,9 +1,13 @@
+const API_URL = import.meta.env.VITE_API_URL;
 const GAS_URL = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL;
 const PASS_THRESHOLD = Number(import.meta.env.VITE_PASS_THRESHOLD) || 7;
 
-// 當 GAS URL 未設定或為預設值時，使用 demo 模式
-const IS_DEMO =
-    !GAS_URL || GAS_URL.includes('YOUR_DEPLOYMENT_ID');
+// 模式偵測：API_URL（SQLite） → GAS_URL（Google Sheets） → Demo
+const MODE = API_URL
+    ? 'sqlite'
+    : GAS_URL && !GAS_URL.includes('YOUR_DEPLOYMENT_ID')
+        ? 'gas'
+        : 'demo';
 
 // ─── Demo 假資料 ───
 const DEMO_QUESTIONS = [
@@ -43,17 +47,24 @@ function getDemoResult(answers) {
 // ─── Public API ───
 
 /**
- * 從 Google Apps Script 取得隨機題目
+ * 取得隨機題目
  * @param {number} count
  * @returns {Promise<Array>}
  */
 export async function fetchQuestions(count) {
-    if (IS_DEMO) {
-        // 模擬網路延遲
+    if (MODE === 'demo') {
         await new Promise((r) => setTimeout(r, 800));
         return getDemoQuestions(count);
     }
 
+    if (MODE === 'sqlite') {
+        const res = await fetch(`${API_URL}/api/questions?count=${count}`);
+        if (!res.ok) throw new Error('無法取得題目');
+        const data = await res.json();
+        return data.questions;
+    }
+
+    // GAS mode
     const res = await fetch(`${GAS_URL}?action=getQuestions&count=${count}`);
     if (!res.ok) throw new Error('無法取得題目');
     const data = await res.json();
@@ -62,17 +73,28 @@ export async function fetchQuestions(count) {
 }
 
 /**
- * 提交作答結果到 Google Apps Script
+ * 提交作答結果
  * @param {string} playerId
  * @param {Array<{questionId: number, answer: string}>} answers
  * @returns {Promise<Object>}
  */
 export async function submitAnswers(playerId, answers) {
-    if (IS_DEMO) {
+    if (MODE === 'demo') {
         await new Promise((r) => setTimeout(r, 600));
         return getDemoResult(answers);
     }
 
+    if (MODE === 'sqlite') {
+        const res = await fetch(`${API_URL}/api/submit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: playerId, answers }),
+        });
+        if (!res.ok) throw new Error('提交失敗');
+        return await res.json();
+    }
+
+    // GAS mode
     const res = await fetch(GAS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -86,4 +108,25 @@ export async function submitAnswers(playerId, answers) {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     return data;
+}
+
+/**
+ * 取得排行榜
+ * @param {number} limit
+ * @returns {Promise<Array>}
+ */
+export async function fetchLeaderboard(limit = 10) {
+    if (MODE === 'demo') {
+        return [];
+    }
+
+    if (MODE === 'sqlite') {
+        const res = await fetch(`${API_URL}/api/leaderboard?limit=${limit}`);
+        if (!res.ok) throw new Error('無法取得排行榜');
+        const data = await res.json();
+        return data.leaderboard;
+    }
+
+    // GAS mode — 目前不支援排行榜
+    return [];
 }
