@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "title": "Software PM | 個人作品集",
+    "description": "資深軟體產品經理，專注於從 0 到 1 的產品開發與跨部門協作。"
+  },
+  "nav": {
+    "about": "關於我",
+    "skills": "技能",
+    "experience": "經歷",
+    "portfolio": "作品",
+    "contact": "聯絡"
+  },
+  "hero": {
+    "greeting": "你好，我是",
+    "name": "Conrad",
+    "title": "Software Product Manager",
+    "tagline": "將複雜的技術挑戰轉化為優雅的產品體驗",
+    "cta": "了解更多"
+  },
+  "about": {
+    "heading": "關於我",
+    "description": "擁有多年軟體產品管理經驗，擅長跨部門溝通、敏捷開發流程設計與數據驅動決策。致力於打造使用者真正需要的產品，從需求探索到上線交付，推動每一個環節。",
+    "stats": {
+      "years": "年經驗",
+      "products": "個產品",
+      "teams": "人團隊"
+    }
+  },
+  "skills": {
+    "heading": "技能與工具",
+    "categories": {
+      "pm": "產品管理",
+      "tools": "工具",
+      "tech": "技術理解",
+      "soft": "軟實力"
+    }
+  },
+  "experience": {
+    "heading": "工作經歷",
+    "present": "至今"
+  },
+  "portfolio": {
+    "heading": "精選作品",
+    "viewProject": "查看詳情",
+    "viewAll": "查看全部作品"
+  },
+  "contact": {
+    "heading": "聯絡我",
+    "description": "有合作機會或只是想聊聊？歡迎隨時聯繫。",
+    "email": "寄信給我",
+    "resume": "下載履歷"
+  },
+  "footer": {
+    "rights": "保留所有權利。"
+  },
+  "theme": {
+    "light": "淺色模式",
+    "dark": "深色模式"
+  }
+}

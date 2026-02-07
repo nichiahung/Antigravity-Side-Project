@@ -1,0 +1,105 @@
+.experience {
+    background: var(--color-bg);
+}
+
+.timeline {
+    position: relative;
+    padding-left: var(--space-3xl);
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+}
+
+.timelineItem {
+    position: relative;
+    padding-bottom: var(--space-3xl);
+}
+
+.timelineItem:last-child {
+    padding-bottom: 0;
+}
+
+.dot {
+    position: absolute;
+    left: calc(-1 * var(--space-3xl) + 1px);
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--color-accent);
+    background: var(--color-bg);
+    z-index: 1;
+}
+
+.timelineHeader {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
+}
+
+.role {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-semibold);
+}
+
+.company {
+    font-family: var(--font-heading);
+    font-size: var(--fs-body);
+    color: var(--color-accent);
+    font-weight: var(--fw-medium);
+}
+
+.period {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+}
+
+.description {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-top: var(--space-sm);
+}
+
+.highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+.highlight {
+    font-size: var(--fs-xs);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+    font-family: var(--font-heading);
+    font-weight: var(--fw-medium);
+}
+
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: var(--space-2xl);
+    }
+
+    .dot {
+        left: calc(-1 * var(--space-2xl) + 1px);
+    }
+
+    .timelineHeader {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+}

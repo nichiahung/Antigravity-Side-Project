@@ -1,0 +1,60 @@
+{
+    "metadata": {
+        "title": "Software PM | Portfolio",
+        "description": "Senior Software Product Manager specializing in 0-to-1 product development and cross-functional collaboration."
+    },
+    "nav": {
+        "about": "About",
+        "skills": "Skills",
+        "experience": "Experience",
+        "portfolio": "Portfolio",
+        "contact": "Contact"
+    },
+    "hero": {
+        "greeting": "Hi, I'm",
+        "name": "Conrad",
+        "title": "Software Product Manager",
+        "tagline": "Turning complex technical challenges into elegant product experiences",
+        "cta": "Learn More"
+    },
+    "about": {
+        "heading": "About Me",
+        "description": "Experienced Software Product Manager skilled in cross-functional communication, agile process design, and data-driven decision making. Passionate about building products people truly need — driving every stage from discovery to delivery.",
+        "stats": {
+            "years": "Years Exp.",
+            "products": "Products",
+            "teams": "Team Size"
+        }
+    },
+    "skills": {
+        "heading": "Skills & Tools",
+        "categories": {
+            "pm": "Product Management",
+            "tools": "Tools",
+            "tech": "Technical",
+            "soft": "Soft Skills"
+        }
+    },
+    "experience": {
+        "heading": "Experience",
+        "present": "Present"
+    },
+    "portfolio": {
+        "heading": "Featured Work",
+        "viewProject": "View Details",
+        "viewAll": "View All Work"
+    },
+    "contact": {
+        "heading": "Get in Touch",
+        "description": "Have an opportunity or just want to chat? Feel free to reach out anytime.",
+        "email": "Email Me",
+        "resume": "Download Resume"
+    },
+    "footer": {
+        "rights": "All rights reserved."
+    },
+    "theme": {
+        "light": "Light Mode",
+        "dark": "Dark Mode"
+    }
+}
